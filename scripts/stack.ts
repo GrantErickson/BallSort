@@ -1,5 +1,5 @@
 export class Stack {
-    balls: number[] = [];
+    balls: string[] = [];
     readonly size: number;
 
     constructor(size: number) {
@@ -9,16 +9,16 @@ export class Stack {
     get ballCount(): number {
         return this.balls.length
     }
-    entropy(): number {
+    get entropy(): number {
         // Calculate entropy of this stack 
         // Full of the name type is 0
         // Empty is .5
         // Each different ball going down increases entropy by .5
         // Each blank spot increases entropy by .2
-        let result = (this.size - 1 - (this.balls.length)) * .2;
-        let lastBall = -1
+        let result = (this.size - this.balls.length) * .2;
+        let lastBall = null
         for (let i = this.balls.length - 1; i >= 0; i--) {
-            if (lastBall = -1) {
+            if (lastBall == null) {
                 lastBall = this.balls[i];
             } else {
                 if (lastBall != this.balls[i]) {
@@ -30,7 +30,7 @@ export class Stack {
         return result;
     }
 
-    addBall(ball: number) {
+    addBall(ball: string) {
         if (this.balls.length < this.size) {
             this.balls.push(ball);
         } else {
@@ -38,11 +38,29 @@ export class Stack {
         }
     }
 
-    removeBall(): number {
+    removeBall(): string {
         if (this.balls.length > 0) {
-            return this.balls.pop() as number;
+            return this.balls.pop() as string;
         } else {
             throw new Error("Stack is empty");
         }
+    }
+
+    toString(): string {
+        let result: string = "";
+        for (let b of this.balls) {
+            result = b + result
+        }
+        result = result.padStart(this.size, " ");
+        return result;
+    }
+
+    get canReceiveBall(): boolean {
+        return this.balls.length < this.size;
+    }
+
+    get topBall():string|null {
+        if (this.balls.length === 0 ) return null;
+        return this.balls[this.balls.length - 1];
     }
 }

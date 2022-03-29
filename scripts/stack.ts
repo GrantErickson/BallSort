@@ -1,9 +1,14 @@
 export class Stack {
     balls: string[] = [];
+    index: number;
+    selected: boolean = false;
+    highlightedFrom: boolean = false;
+    highlightedTo: boolean = false;
     readonly size: number;
 
-    constructor(size: number) {
+    constructor(size: number, index: number) {
         this.size = size;
+        this.index = index;
     }
 
     load(balls: string) {
@@ -11,10 +16,10 @@ export class Stack {
             throw new Error("Too many balls");
         }
         this.balls = []
-        for(let ball of balls.split("").reverse().join("")){
+        for (let ball of balls.split("").reverse().join("")) {
             this.addBall(ball);
         }
-    }   
+    }
 
     get ballCount(): number {
         return this.balls.length
@@ -71,8 +76,8 @@ export class Stack {
         return this.balls.length < this.size;
     }
 
-    get topBall():string|null {
-        if (this.balls.length === 0 ) return null;
+    get topBall(): string | null {
+        if (this.balls.length === 0) return null;
         return this.balls[this.balls.length - 1];
     }
 }

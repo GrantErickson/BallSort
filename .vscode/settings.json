@@ -1,3 +1,4 @@
 {
-    "jest.jestCommandLine": "npm test --"
+    "jest.jestCommandLine": "npm test --",
+    "vetur.format.options.tabSize": 2
 }

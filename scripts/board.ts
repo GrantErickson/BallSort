@@ -1,17 +1,23 @@
 import { Stack } from "./stack";
 import { Move } from "./move"
 
-export class BallSort {
+export class Board {
     readonly stackCount: number;
     readonly stackSize: number;
     readonly stacks: Stack[] = [];
-    private gameStates: string[] = [];
 
     constructor(stackCount: number, stackSize: number) {
         this.stackCount = stackCount;
         this.stackSize = stackSize;
         for (let i = 0; i < stackCount; i++) {
             this.stacks.push(new Stack(stackSize));
+        }
+    }
+    
+    load(board: string){    
+        for(let i = 0; i < board.length; i=i+this.stackSize){
+            let stack = this.stacks[i/this.stackSize];
+            stack.load(board.substr(i, this.stackSize));
         }
     }
 
@@ -31,10 +37,22 @@ export class BallSort {
         return result;
     }
 
+    public moveBall(move:Move){
+        move.toStack.addBall(move.fromStack.removeBall());
+    }
+
     public toString(): string {
         let result: string = ""
         for (let stack of this.stacks) {
             result = result + stack.toString()
+        }
+        return result;
+    }
+
+    get entropy(): number{
+        let result = 0;
+        for(let stack of this.stacks){
+            result += stack.entropy;
         }
         return result;
     }

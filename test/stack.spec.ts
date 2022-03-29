@@ -67,7 +67,7 @@ describe("Stack toString", () => {
 describe("Stack entropy", () => {
   let stack = new Stack(4)
   test("Entropy", () => {
-    expect(stack.entropy).toBeCloseTo(.8);
+    expect(stack.entropy).toBeCloseTo(0);
     stack.addBall("1");
     stack.addBall("A");
     expect(stack.entropy).toBe(.9);
@@ -77,4 +77,13 @@ describe("Stack entropy", () => {
     stack.addBall("1");
     expect(stack.entropy).toBe(0);
   })
+})
+
+
+describe("Stack Load",()=>{
+  let stack = new Stack(4);
+  stack.load("1234");
+  test("Correct String", () => {
+    expect(stack.toString()).toBe("1234");
+  }) 
 })

@@ -2,17 +2,17 @@
 * @jest-environment node
 */
 
-import { BallSort } from '~/scripts/ballSort'
+import { Board } from '~/scripts/board'
 
 describe('Create Game', () => {
-  let game = new BallSort(3, 3);
+  let game = new Board(3, 3);
   test('Has slots', () => {
     expect(game.stackCount).toBe(3)
   })
 })
 
 describe('Test Game', () => {
-  let game = new BallSort(3, 3);
+  let game = new Board(3, 3);
   game.stacks[0].addBall("A");
   game.stacks[0].addBall("B");
   game.stacks[2].addBall("B");
@@ -32,3 +32,24 @@ describe('Test Game', () => {
     expect(game.availableMoves()[0].toStack).toBe(game.stacks[0]);
   })
 })
+
+describe("Board Load",()=>{
+  let board = new Board(5,4);
+  board.load("1234432112344321    ");
+  test("Correct String", () => {
+    expect(board.stacks[0].toString()).toBe("1234");
+    expect(board.stacks[1].toString()).toBe("4321");
+    expect(board.stacks[2].toString()).toBe("1234");
+    expect(board.stacks[3].toString()).toBe("4321");
+    expect(board.stacks[4].toString()).toBe("    ");
+  })
+})
+
+describe("Board Load",()=>{
+  let board = new Board(4,4);
+  board.load("111122223333    ");
+  test("Correct solved Entropy", () => {
+    expect(board.entropy).toBe(0);
+  })
+})
+

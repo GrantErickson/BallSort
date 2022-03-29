@@ -6,15 +6,26 @@ export class Stack {
         this.size = size;
     }
 
+    load(balls: string) {
+        if (balls.length > this.size) {
+            throw new Error("Too many balls");
+        }
+        this.balls = []
+        for(let ball of balls.split("").reverse().join("")){
+            this.addBall(ball);
+        }
+    }   
+
     get ballCount(): number {
         return this.balls.length
     }
     get entropy(): number {
         // Calculate entropy of this stack 
         // Full of the name type is 0
-        // Empty is .5
+        // Empty is 0
         // Each different ball going down increases entropy by .5
         // Each blank spot increases entropy by .2
+        if (this.balls.length === 0) return 0;
         let result = (this.size - this.balls.length) * .2;
         let lastBall = null
         for (let i = this.balls.length - 1; i >= 0; i--) {
@@ -31,6 +42,7 @@ export class Stack {
     }
 
     addBall(ball: string) {
+        if (ball === " ") return;
         if (this.balls.length < this.size) {
             this.balls.push(ball);
         } else {

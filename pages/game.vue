@@ -22,9 +22,9 @@
         </v-card-text>
         <v-card-actions>
           <v-btn @click="undo" color="primary">Undo</v-btn>
-          <v-btn>{{ board.entropy }}</v-btn>
+          <v-btn>{{ board.entropy.toFixed(2) }}</v-btn>
           <v-btn>{{ isSolvable }}</v-btn>
-          <v-btn v-if="nextMove"
+          <v-btn v-if="nextMove!=null"
             >{{ nextMove.fromStack.index + 1 }} to
             {{ nextMove.toStack.index + 1 }}</v-btn
           >
@@ -45,7 +45,7 @@ import { Move } from '@/scripts/move'
 @Component
 export default class GamePage extends Vue {
   board: Board = new Board(11, 4)
-  nextMove?: Move
+  nextMove: Move|null = null
 
   mounted() {
     this.board.load('VTKBVCTPBCPSPLCSVBLSPGTGKSLBKTGVLGKC        ')

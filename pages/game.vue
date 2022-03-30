@@ -14,7 +14,6 @@
             >
               <CStack
                 :stack="stack"
-                :index="index"
                 @click="stackClick"
               ></CStack>
             </v-col>

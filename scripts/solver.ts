@@ -1,43 +1,76 @@
-import { Board } from './board';
-import { Move } from './move';
+import { Board } from './board'
+import { Move } from './move'
 
 export class Solver {
-    board: Board
-    boards: Map<string, Move[]> = new Map<string, Move[]>();
-    constructor(ballSort: Board) {
-        this.board = ballSort
+  board: Board
+  boardsAttempted: Map<string, BoardMove|null> = new Map<string, BoardMove>()
+  movesToAttempt: BoardMove[] = []
+  
+
+  constructor(ballSort: Board) {
+    this.board = ballSort 
+  }
+
+  solve(): Move[] | null {
+    // Is board solved? If so return an empty array
+    if (this.board.entropy === 0) return [];
+    // Add original board to boards attempted
+    this.boardsAttempted.set(this.board.toString(), null)
+    // Push the first attempts onto the list
+    for (let move of this.board.availableMoves()) {
+      this.movesToAttempt.push(new BoardMove(this.board.clone(), move, null))
     }
-
-    solve(currentMoves: Move[]): Move[] {
-        let moves: Move[] = this.board.availableMoves();
-        let state = this.board.toString();
-        for (let move of moves) {
-            this.board.moveBall(move)
-            if (this.board.entropy === 0) {
-                return [move];
-            } else {
-                let newMoves = currentMoves.concat(move)
-                // We haven't see this before or the one we have was done in fewer moves
-                if (!this.boards.has(this.board.toString())) {
-                    // this board hasn't been seen before
-                    // Add it to seen boards
-                    this.boards.set(this.board.toString(), newMoves);
-                    let result = this.solve(newMoves)
-                    if (result.length > 0) {
-                        result.push(move);
-                        return result;
-                    }
-                }
-
-            }
-            // Set the board back to its original state
-            this.board.load(state);
+    // Start processing the boards
+    while (this.movesToAttempt.length > 0) {
+      // Remove first item from array
+      let boardMove = this.movesToAttempt.shift()!
+      console.log(`Attempting ${boardMove.move.fromStack} to ${boardMove.move.toStack} with ${boardMove.board.toString()}`)
+      // Make the move
+      boardMove.board.moveBall(boardMove.move)
+      // Check if we've seen this board before
+      if (!this.boardsAttempted.has(boardMove.board.toString())) {
+        // Add the board to the list of attempted boards
+        this.boardsAttempted.set(boardMove.board.toString(), boardMove)
+        // Check if the board is solved
+        if (boardMove.board.entropy == 0) {
+          // This is solved
+          return boardMove.getAllMoves()
+        } else {
+          // Add the new moves to the list
+          for (let move of boardMove.board.availableMoves()) {
+            this.movesToAttempt.push(
+              new BoardMove(boardMove.board.clone(), move, boardMove)
+            )
+          }
         }
-        // Tried everything and didn't find anything new.
-        return [];
+      }
     }
+    return null
+  }
 
-    isSolvable(): boolean {
-        return (this.solve([]).length > 0)
+  isSolvable(): boolean {
+    return this.solve() != null
+  }
+}
+
+class BoardMove {
+  board: Board
+  move: Move
+  previousMove: BoardMove | null
+
+  constructor(board: Board, move: Move, previousMove: BoardMove | null) {
+    this.board = board
+    this.move = move
+    this.previousMove = previousMove
+  }
+
+  getAllMoves(): Move[] {
+    let moves: Move[] = []
+    let boardMove: BoardMove | null = this
+    while (boardMove != null) {
+      moves.push(boardMove.move)
+      boardMove = boardMove.previousMove
     }
+    return moves.reverse()
+  }
 }

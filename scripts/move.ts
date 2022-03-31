@@ -1,11 +1,11 @@
 import {Stack} from '@/scripts/stack';
 
-export class Move{
-    fromStack: Stack
-    toStack: Stack
+export class Move {
+  fromStack: number
+  toStack: number
 
-    constructor(fromstack: Stack, toStack: Stack){
-        this.fromStack = fromstack
-        this.toStack = toStack;
-    }
+  constructor(fromstack: number, toStack: number) {
+    this.fromStack = fromstack
+    this.toStack = toStack
+  }
 }

@@ -76,6 +76,12 @@ export class Stack {
         return this.balls.length < this.size;
     }
 
+    get canGiveBallForReverse(): boolean {
+        // Either there is only one ball or the top two balls are the same color.
+        return this.balls.length == 1 || 
+        (this.balls.length> 0 && this.balls[this.balls.length - 1] == this.balls[this.balls.length - 2]);
+    }
+
     get topBall(): string | null {
         if (this.balls.length === 0) return null;
         return this.balls[this.balls.length - 1];

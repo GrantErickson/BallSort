@@ -87,3 +87,21 @@ describe("Stack Load", () => {
         expect(stack.toString()).toBe("1234");
     })
 })
+
+describe("CanGiveBallForReverse", ()=>{
+    let stack = new Stack(4, 0);
+    test("CanGiveBallForReverse", ()=>{
+        stack.load("1234");
+        expect(stack.canGiveBallForReverse).toBe(false);
+        stack.load("    ");
+        expect(stack.canGiveBallForReverse).toBe(false);
+        stack.load("12  ");
+        expect(stack.canGiveBallForReverse).toBe(false);
+        stack.load("11 ");
+        expect(stack.canGiveBallForReverse).toBe(true);
+        stack.load("2222");
+        expect(stack.canGiveBallForReverse).toBe(true);
+        stack.load("1   ");
+        expect(stack.canGiveBallForReverse).toBe(true);
+    })
+})

@@ -28,6 +28,9 @@
           <v-btn @click="newGame(1)">Easy</v-btn>
           <v-btn @click="newGame(2)">Medium</v-btn>
           <v-btn @click="newGame(3)">Hard</v-btn>
+          <v-btn @click="randomGame(5, 3, 2)">Random Easy</v-btn>
+          <v-btn @click="randomGame(6, 4, 2)">RandomMedium </v-btn>
+          <v-btn @click="randomGame(9, 5, 2)">Random Hard</v-btn>
         </v-card-actions>
         <v-card-actions>
           <v-banner v-if="winner" color="secondary" elevation="7"
@@ -46,6 +49,7 @@ import { Board } from '@/scripts/board'
 import CStack from '@/components/CStack.vue'
 import { Solver } from '@/scripts/solver'
 import { Move } from '@/scripts/move'
+import { Randomizer } from '@/scripts/randomizer'
 
 @Component
 export default class GamePage extends Vue {
@@ -72,6 +76,10 @@ export default class GamePage extends Vue {
         )
         break
     }
+  }
+
+  randomGame(balls: number, stackSize: number, openStacks: number) {
+    this.board = Randomizer.getGame(balls, stackSize, openStacks)
   }
 
   stackClick(cStack: CStack) {

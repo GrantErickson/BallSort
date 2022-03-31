@@ -18,9 +18,9 @@ describe('Solve Simple Board', () => {
 
 
 describe('Solve Medium Board', () => {
-  test('4 Columns', () => {
+  test('5 Columns', () => {
     let board = new Board(5, 3);
-    board.load("123123123      ");
+    board.load("123   123123   ");
     let solver = new Solver(board);
     let result = solver.solve([]);
     expect(solver.board.entropy).toBe(0);

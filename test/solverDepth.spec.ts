@@ -19,8 +19,7 @@ describe('Solve Simple Board', () => {
 
 describe('Solve Medium Board', () => {
   test('5 Columns', () => {
-    let board = new Board(5, 3);
-    board.load("123   123123   ");
+    let board = new Board(5, 3, '123   123123   ')
     let solver = new SolverDepth(board)
     let result = solver.solve([]);
     expect(solver.board.entropy).toBe(0);
@@ -29,8 +28,7 @@ describe('Solve Medium Board', () => {
 
 describe('Solve Hard Board', () => {
   test('11 Columns', () => {
-    let board = new Board(11, 4);
-    board.load("VTKBVCTPBCPSPLCSVBLSPGTGKSLBKTGVLGKC        ");
+    let board = new Board(11, 4, 'VTKBVCTPBCPSPLCSVBLSPGTGKSLBKTGVLGKC        ')
     let solver = new SolverDepth(board)
     let result = solver.solve([]);
     expect(solver.board.entropy).toBe(0);

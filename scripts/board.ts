@@ -7,11 +7,18 @@ export class Board {
   readonly stacks: Stack[] = []
   readonly moves: Move[] = []
 
-  constructor(stackCount: number, stackSize: number) {
+  constructor(
+    stackCount: number,
+    stackSize: number,
+    board: string | null = null
+  ) {
     this.stackCount = stackCount
     this.stackSize = stackSize
     for (let i = 0; i < stackCount; i++) {
       this.stacks.push(new Stack(stackSize, i))
+    }
+    if (board != null) {
+      this.load(board)
     }
   }
 

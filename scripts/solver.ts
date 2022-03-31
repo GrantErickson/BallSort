@@ -3,17 +3,16 @@ import { Move } from './move'
 
 export class Solver {
   board: Board
-  boardsAttempted: Map<string, BoardMove|null> = new Map<string, BoardMove>()
+  boardsAttempted: Map<string, BoardMove | null> = new Map<string, BoardMove>()
   movesToAttempt: BoardMove[] = []
-  
 
   constructor(ballSort: Board) {
-    this.board = ballSort 
+    this.board = ballSort
   }
 
   solve(): Move[] | null {
     // Is board solved? If so return an empty array
-    if (this.board.entropy === 0) return [];
+    if (this.board.entropy === 0) return []
     // Add original board to boards attempted
     this.boardsAttempted.set(this.board.toString(), null)
     // Push the first attempts onto the list
@@ -24,7 +23,7 @@ export class Solver {
     while (this.movesToAttempt.length > 0) {
       // Remove first item from array
       let boardMove = this.movesToAttempt.shift()!
-      console.log(`Attempting ${boardMove.move.fromStack} to ${boardMove.move.toStack} with ${boardMove.board.toString()}`)
+      //console.log(`Attempting ${boardMove.move.fromStack} to ${boardMove.move.toStack} with ${boardMove.board.toString()}`)
       // Make the move
       boardMove.board.moveBall(boardMove.move)
       // Check if we've seen this board before
@@ -41,6 +40,13 @@ export class Solver {
             this.movesToAttempt.push(
               new BoardMove(boardMove.board.clone(), move, boardMove)
             )
+          }
+          // Only sort the boards periodically
+          if (this.movesToAttempt.length % 20 == 0) {
+            // Sort boards based on Entropy
+            this.movesToAttempt.sort((a, b) => {
+              return a.board.entropy - b.board.entropy
+            })
           }
         }
       }
@@ -71,6 +77,6 @@ class BoardMove {
       moves.push(boardMove.move)
       boardMove = boardMove.previousMove
     }
-    return moves.reverse()
+    return moves
   }
 }

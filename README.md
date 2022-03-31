@@ -6,6 +6,8 @@ This is a little project where balls need to be sorted into stacks.
 
 [Play it here](https://ashy-field-0b34bfc1e.1.azurestaticapps.net/)
 
+[![CI/CD Deploy to Azure Static Website](https://github.com/GrantErickson/BallSort/actions/workflows/azure-static-web-apps-ashy-field-0b34bfc1e.yml/badge.svg?branch=master)](https://github.com/GrantErickson/BallSort/actions/workflows/azure-static-web-apps-ashy-field-0b34bfc1e.yml)
+
 ## Build Setup
 
 ```bash

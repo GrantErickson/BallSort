@@ -11,15 +11,14 @@
     <v-card-text class="d-flex px-2">
       <v-row style="height: 100%" class="stack-content">
         <v-col cols="12" class="align-self-end">
-          <v-chip
+          <CBall
             v-for="(ball, index) in balls"
+            :ball="ball"
+            v-bind:style="{ background: ballColor(ball) }"
             v-bind:key="index"
-            :style="{ 'background-color': ballColor(ball) }"
-            class="my-0"
             :class="{ 'mb-2 mt-n2': stack.selected && index == 0 }"
           >
-            {{ ball }}
-          </v-chip>
+          </CBall>
         </v-col>
       </v-row>
     </v-card-text>
@@ -30,6 +29,7 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { Stack } from 'scripts/stack'
 import { Colorer } from '@/scripts/colorer'
+import CBall from '@/components/CBall.vue'
 
 @Component
 export default class CStack extends Vue {

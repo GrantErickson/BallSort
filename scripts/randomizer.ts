@@ -52,7 +52,6 @@ export abstract class Randomizer {
       let moveMade: boolean = false
       for (let move of moves) {
         if (Math.random() > 0.4) {
-          console.log(`Trying move: ${move.count}`)
           for (let i = 0; i < move.count; i++) {
             board.moveBall(move)
           }
@@ -111,7 +110,6 @@ export abstract class Randomizer {
       // Get the next move
       let boardMove = movesToTry.shift()!
       // Make the moves
-      console.log(`Making ${boardMove.move.count} moves`)
       for (let i = 0; i < boardMove.move.count; i++) {
         boardMove.board.moveBall(boardMove.move)
       }

@@ -20,7 +20,7 @@
           <v-btn @click="undo" color="primary">Undo</v-btn>
           <v-chip class="mx-2">entropy: {{ board.entropy.toFixed(2) }}</v-chip>
           <v-chip class="mx-2">solvable: {{ isSolvable }}</v-chip>
-          <v-chip v-if="nextMove != null" class="mx-2"
+          <v-chip v-if="nextMove != null" class="mx-2" @click="makeNextMove"
             >hint: {{ nextMove.fromStack + 1 }} to
             {{ nextMove.toStack + 1 }}</v-chip
           >
@@ -100,6 +100,11 @@ export default class GamePage extends Vue {
 
   get isSolvable(): boolean {
     if (this.solving) return true
+    if (this.board.entropy === 0){
+      this.nextMove = null
+      this.board.clearHighlights()
+      return true
+    }
     let solver: Solver = new Solver(this.board.clone())
     let moves = solver.solve()
     this.board.clearHighlights()
@@ -119,6 +124,11 @@ export default class GamePage extends Vue {
 
   get winner(): boolean {
     return this.board.entropy == 0
+  }
+
+  makeNextMove(): void {
+    if (this.nextMove == null) return
+    this.board.moveBall(this.nextMove)
   }
 
   solve(): void {

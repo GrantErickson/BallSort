@@ -9,14 +9,14 @@
     }"
   >
     <v-card-text class="d-flex px-2">
-      <v-row style="height: 100%" class="stack-content">
+      <v-row style="height: 100%" :class="heightClass" class="stack-content">
         <v-col cols="12" class="align-self-end">
           <CBall
             v-for="(ball, index) in balls"
             :ball="ball"
             v-bind:style="{ background: ballColor(ball) }"
             v-bind:key="index"
-            :class="{ 'mb-2 mt-n2': stack.selected && index == 0 }"
+            :class="{ 'mb-3 mt-n2': stack.selected && index == 0 }"
           >
           </CBall>
         </v-col>
@@ -48,6 +48,10 @@ export default class CStack extends Vue {
   ballColor(ball: string) {
     return Colorer.getColor(ball)
   }
+
+  get heightClass(): string {
+    return `stack-height-${this.stack.size}`
+  }
 }
 </script>
 
@@ -75,6 +79,14 @@ export default class CStack extends Vue {
 .stack-content {
   max-width: 55px;
   min-width: 55px;
-  min-height: 150px;
+}
+.stack-height-3 {
+  min-height: 130px;
+}
+.stack-height-4 {
+  min-height: 160px;
+}
+.stack-height-5 {
+  min-height: 190px;
 }
 </style>

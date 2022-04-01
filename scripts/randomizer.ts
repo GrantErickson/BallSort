@@ -76,6 +76,8 @@ export abstract class Randomizer {
         bestBoardEntropy = b.entropy
       }
     }
+
+    bestBoard.randomizeStacks()
     return bestBoard
   }
 
@@ -143,6 +145,7 @@ export abstract class Randomizer {
         bestBoardEntropy = b.entropy
       }
     }
+    bestBoard.randomizeStacks()
     return bestBoard
   }
 }

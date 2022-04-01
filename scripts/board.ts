@@ -163,4 +163,14 @@ export class Board {
       stack.highlightedTo = false
     }
   }
+
+  // Randomize Columns
+  randomizeStacks(): void {
+    for (let i = 0; i < this.stackCount; i++) {
+      let temp = this.stacks.splice(i,1)[0]
+      let randomIndex = Math.floor(Math.random() * this.stacks.length)
+      console.log(`Swapping ${i} with ${randomIndex}`)
+      this.stacks.splice(randomIndex, 0, temp)
+    }
+  }
 }

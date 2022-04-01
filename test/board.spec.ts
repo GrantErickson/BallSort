@@ -44,7 +44,10 @@ describe('Test Available Moves', () => {
 
 describe('Test Available Reverse Moves', () => {
     test('Test Available Reverse Moves', () => {
-        let game = new Board(3, 3, "AAABBB   ")
+        let game = new Board(2, 3, 'AAA   ')
+        expect(game.availableReverseMoves().length).toBe(1)
+        expect(game.availableReverseMoves()[0].count).toBe(2)
+        game = new Board(3, 3, "AAABBB   ")
         expect(game.availableReverseMoves().length).toBe(2)
         game = new Board(3, 3, "AAABB   ")
         expect(game.availableReverseMoves().length).toBe(3)

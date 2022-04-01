@@ -25,17 +25,22 @@
             {{ nextMove.toStack + 1 }}</v-chip
           >
           <v-spacer></v-spacer>
-          <v-btn @click="newGame(1)">Easy</v-btn>
-          <v-btn @click="newGame(2)">Medium</v-btn>
-          <v-btn @click="newGame(3)">Hard</v-btn>
-          <v-btn @click="randomGame(5, 3, 2)">Random Easy</v-btn>
-          <v-btn @click="randomGame(6, 4, 2)">RandomMedium </v-btn>
-          <v-btn @click="randomGame(9, 5, 2)">Random Hard</v-btn>
+          <v-btn @click="solve()" v-if="!solving" class="primary">Solve</v-btn>
+          <v-btn @click="stopSolve()" v-if="solving" class="warning"
+            >Stop</v-btn
+          >
         </v-card-actions>
         <v-card-actions>
           <v-banner v-if="winner" color="secondary" elevation="7"
             >You Win!</v-banner
           >
+          <v-spacer></v-spacer>
+          <v-btn @click="newGame(1)">Easy</v-btn>
+          <v-btn @click="newGame(2)">Medium</v-btn>
+          <v-btn @click="newGame(3)">Hard</v-btn>
+          <v-btn @click="randomGame(4, 3, 2)">Random Easy</v-btn>
+          <v-btn @click="randomGame(6, 4, 2)">Random Medium </v-btn>
+          <v-btn @click="randomGame(9, 5, 2)">Random Hard</v-btn>
         </v-card-actions>
       </v-card>
     </v-col>
@@ -55,6 +60,8 @@ import { Randomizer } from '@/scripts/randomizer'
 export default class GamePage extends Vue {
   board: Board = new Board(5, 3)
   nextMove: Move | null = null
+  solving: boolean = false
+  timeout: NodeJS.Timeout | null = null
 
   mounted() {
     this.newGame(2)
@@ -92,6 +99,7 @@ export default class GamePage extends Vue {
   }
 
   get isSolvable(): boolean {
+    if (this.solving) return true
     let solver: Solver = new Solver(this.board.clone())
     let moves = solver.solve()
     this.board.clearHighlights()
@@ -111,6 +119,38 @@ export default class GamePage extends Vue {
 
   get winner(): boolean {
     return this.board.entropy == 0
+  }
+
+  solve(): void {
+    let solver: Solver = new Solver(this.board.clone())
+    let moves = solver.solve()
+    if (moves && moves.length > 0) this.makeMove(moves!)
+  }
+
+  stopSolve(): void {
+    if (this.timeout) clearTimeout(this.timeout)
+    this.solving = false
+  }
+
+  makeMove(moves: Move[]): void {
+    this.solving = true
+    let move = moves.pop()!
+    this.board.clearHighlights()
+    this.nextMove = move
+    this.board.stacks[move.fromStack].highlightedFrom = true
+    this.board.stacks[move.toStack].highlightedTo = true
+
+    this.board.attemptMove(this.board.stacks[move.fromStack])
+    this.timeout = setTimeout(() => {
+      this.board.attemptMove(this.board.stacks[move.toStack])
+      if (moves.length > 0) {
+        this.timeout = setTimeout(() => {
+          this.makeMove(moves)
+        }, 250)
+      } else {
+        this.solving = false
+      }
+    }, 500)
   }
 }
 </script>

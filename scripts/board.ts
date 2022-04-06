@@ -24,20 +24,20 @@ export class Board {
 
   load(board: string) {
     for (let i = 0; i < board.length; i = i + this.stackSize) {
-      let stack = this.stacks[i / this.stackSize]
+      const stack = this.stacks[i / this.stackSize]
       stack.load(board.substr(i, this.stackSize))
     }
   }
 
   public availableMoves(): Move[] {
-    let result: Move[] = []
-    for (let targetStack of this.stacks) {
+    const result: Move[] = []
+    for (const targetStack of this.stacks) {
       if (targetStack.canReceiveBall) {
-        for (let sourceStack of this.stacks) {
-          if (targetStack != sourceStack && sourceStack.ballCount > 0) {
+        for (const sourceStack of this.stacks) {
+          if (targetStack !== sourceStack && sourceStack.ballCount > 0) {
             if (
               targetStack.ballCount === 0 ||
-              targetStack.topBall == sourceStack.topBall
+              targetStack.topBall === sourceStack.topBall
             ) {
               result.push(new Move(sourceStack.index, targetStack.index))
             }
@@ -49,13 +49,13 @@ export class Board {
   }
 
   public availableReverseMoves(): Move[] {
-    let result: Move[] = []
-    for (let sourceStack of this.stacks.filter(
+    const result: Move[] = []
+    for (const sourceStack of this.stacks.filter(
       (s) => s.canGiveBallForReverse
     )) {
-      for (let targetStack of this.stacks) {
+      for (const targetStack of this.stacks) {
         if (
-          targetStack != sourceStack &&
+          targetStack !== sourceStack &&
           targetStack.ballCount < this.stackSize
         )
           if (sourceStack.ballCount > 1) {
@@ -84,7 +84,7 @@ export class Board {
 
   public undoMove() {
     if (this.moves.length > 0) {
-      let move = this.moves.pop()!
+      const move = this.moves.pop()!
       this.stacks[move.fromStack].addBall(
         this.stacks[move.toStack].removeBall()
       )
@@ -93,7 +93,7 @@ export class Board {
 
   public toString(): string {
     let result: string = ''
-    for (let stack of this.stacks) {
+    for (const stack of this.stacks) {
       result = result + stack.toString()
     }
     return result
@@ -101,14 +101,14 @@ export class Board {
 
   get entropy(): number {
     let result = 0
-    for (let stack of this.stacks) {
+    for (const stack of this.stacks) {
       result += stack.entropy
     }
     return result
   }
 
   get selectedStack(): Stack | null {
-    let selecteds = this.stacks.filter((s) => s.selected)
+    const selecteds = this.stacks.filter((s) => s.selected)
     if (selecteds.length > 0) return selecteds[0]
     return null
   }
@@ -117,26 +117,15 @@ export class Board {
     if (this.selectedStack == null) {
       if (stack.ballCount !== 0) {
         stack.selected = true
-        console.log(`Selected stack ${stack.index}`)
       }
-    } else if (this.selectedStack == stack) {
+    } else if (this.selectedStack === stack) {
       stack.selected = false
-      console.log(`Deselected stack ${stack.index}`)
     } else {
-      console.log(
-        `Attempting to move from ${this.selectedStack.index} to ${stack.index}`
-      )
-      console.log(
-        `Attempting top from ${this.selectedStack.topBall} to ${stack.topBall}`
-      )
       let moveHappened: boolean = false
       if (
         stack.canReceiveBall &&
-        (stack.ballCount === 0 || stack.topBall == this.selectedStack.topBall)
+        (stack.ballCount === 0 || stack.topBall === this.selectedStack.topBall)
       ) {
-        console.log(
-          `"Moving from ${this.selectedStack.index} to ${stack.index}`
-        )
         this.moveBall(new Move(this.selectedStack.index, stack.index))
         this.selectedStack.selected = false
         moveHappened = true
@@ -151,14 +140,14 @@ export class Board {
   }
 
   clone(): Board {
-    let newBoard = new Board(this.stackCount, this.stackSize)
+    const newBoard = new Board(this.stackCount, this.stackSize)
     newBoard.load(this.toString())
 
     return newBoard
   }
 
   clearHighlights(): void {
-    for (let stack of this.stacks) {
+    for (const stack of this.stacks) {
       stack.highlightedFrom = false
       stack.highlightedTo = false
     }
@@ -167,9 +156,8 @@ export class Board {
   // Randomize Columns
   randomizeStacks(): void {
     for (let i = 0; i < this.stackCount; i++) {
-      let temp = this.stacks.splice(i,1)[0]
-      let randomIndex = Math.floor(Math.random() * this.stacks.length)
-      console.log(`Swapping ${i} with ${randomIndex}`)
+      const temp = this.stacks.splice(i,1)[0]
+      const randomIndex = Math.floor(Math.random() * this.stacks.length)
       this.stacks.splice(randomIndex, 0, temp)
     }
   }

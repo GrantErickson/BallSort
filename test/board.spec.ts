@@ -5,14 +5,14 @@
 import { Board } from '~/scripts/board'
 
 describe('Create Game', () => {
-    let game = new Board(3, 3)
+    const game = new Board(3, 3)
     test('Has slots', () => {
         expect(game.stackCount).toBe(3)
     })
 })
 
 describe('Test Game', () => {
-    let game = new Board(3, 3)
+    const game = new Board(3, 3)
     game.stacks[0].addBall('A')
     game.stacks[0].addBall('B')
     game.stacks[2].addBall('B')
@@ -24,7 +24,7 @@ describe('Test Game', () => {
 })
 
 describe('Test Available Moves', () => {
-    let game = new Board(3, 3)
+    const game = new Board(3, 3)
     game.stacks[0].addBall('A')
     game.stacks[0].addBall('B')
     game.stacks[2].addBall('B')
@@ -57,7 +57,7 @@ describe('Test Available Reverse Moves', () => {
 })
 
 describe('Board Load', () => {
-    let board = new Board(5, 4)
+    const board = new Board(5, 4)
     board.load('1234432112344321    ')
     test('Correct String', () => {
         expect(board.stacks[0].toString()).toBe('1234')
@@ -69,7 +69,7 @@ describe('Board Load', () => {
 })
 
 describe('Board Load', () => {
-    let board = new Board(4, 4)
+    const board = new Board(4, 4)
     board.load('111122223333    ')
     test('Correct solved Entropy', () => {
         expect(board.entropy).toBe(0)

@@ -1,21 +1,21 @@
 <template>
   <v-card
-    @click="click()"
-    class="stack rounded-xl rounded-tr-0 rounded-tl-0"
-    v-bind:class="{
-      selected: stack.selected,
-      highlightedFrom: stack.highlightedFrom,
-      highlightedTo: stack.highlightedTo,
+    :class="{
+        selected: stack.selected,
+        highlightedFrom: stack.highlightedFrom,
+        highlightedTo: stack.highlightedTo,
     }"
+    class="stack rounded-xl rounded-tr-0 rounded-tl-0"
+    @click="click()"
   >
     <v-card-text class="d-flex px-2">
       <v-row style="height: 100%" :class="heightClass" class="stack-content">
         <v-col cols="12" class="align-self-end">
           <CBall
             v-for="(ball, index) in balls"
+            :key="index"
             :ball="ball"
-            v-bind:style="{ background: ballColor(ball) }"
-            v-bind:key="index"
+            :style="{ background: ballColor(ball) }"
             :class="{ 'mb-3 mt-n2': stack.selected && index == 0 }"
           >
           </CBall>
@@ -29,7 +29,6 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { Stack } from 'scripts/stack'
 import { Colorer } from '@/scripts/colorer'
-import CBall from '@/components/CBall.vue'
 
 @Component
 export default class CStack extends Vue {
@@ -37,7 +36,6 @@ export default class CStack extends Vue {
   stack!: Stack
 
   click(): void {
-    console.log(`Click Selected ${this.stack.selected}`)
     this.$emit('click', this)
   }
 

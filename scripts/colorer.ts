@@ -8,7 +8,7 @@ export abstract class Colorer {
         if (this.colors.has(item)) {
             return this.colors.get(item)!;
         } else {
-            let color = this.standardColors.pop()!;
+            const color = this.standardColors.pop()!;
             this.colors.set(item, color);
             return color;
         }

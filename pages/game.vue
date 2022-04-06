@@ -9,7 +9,7 @@
           <v-row>
             <v-col
               v-for="(stack, index) in board.stacks"
-              v-bind:key="index"
+              :key="index"
               class=""
             >
               <CStack :stack="stack" @click="stackClick"></CStack>
@@ -17,7 +17,7 @@
           </v-row>
         </v-card-text>
         <v-card-actions>
-          <v-btn @click="undo" color="primary">Undo</v-btn>
+          <v-btn color="primary" @click="undo" >Undo</v-btn>
           <v-chip class="mx-2">entropy: {{ board.entropy.toFixed(2) }}</v-chip>
           <v-chip class="mx-2">solvable: {{ isSolvable }}</v-chip>
           <v-chip v-if="nextMove != null" class="mx-2" @click="makeNextMove"
@@ -25,8 +25,8 @@
             {{ nextMove.toStack + 1 }}</v-chip
           >
           <v-spacer></v-spacer>
-          <v-btn @click="solve()" v-if="!solving" class="primary">Solve</v-btn>
-          <v-btn @click="stopSolve()" v-if="solving" class="warning"
+          <v-btn v-if="!solving" class="primary" @click="solve()" >Solve</v-btn>
+          <v-btn v-if="solving" class="warning" @click="stopSolve()" 
             >Stop</v-btn
           >
         </v-card-actions>
@@ -91,7 +91,7 @@ export default class GamePage extends Vue {
 
   stackClick(cStack: CStack) {
     this.board.attemptMove(cStack.stack)
-    console.log(`Got click ${cStack.stack.index}`)
+    // console.log(`Got click ${cStack.stack.index}`)
   }
 
   undo() {
@@ -105,8 +105,8 @@ export default class GamePage extends Vue {
       this.board.clearHighlights()
       return true
     }
-    let solver: Solver = new Solver(this.board.clone())
-    let moves = solver.solve()
+    const solver: Solver = new Solver(this.board.clone())
+    const moves = solver.solve()
     this.board.clearHighlights()
     if (moves == null) {
       this.nextMove = null
@@ -123,7 +123,7 @@ export default class GamePage extends Vue {
   }
 
   get winner(): boolean {
-    return this.board.entropy == 0
+    return this.board.entropy === 0
   }
 
   makeNextMove(): void {
@@ -132,8 +132,8 @@ export default class GamePage extends Vue {
   }
 
   solve(): void {
-    let solver: Solver = new Solver(this.board.clone())
-    let moves = solver.solve()
+    const solver: Solver = new Solver(this.board.clone())
+    const moves = solver.solve()
     if (moves && moves.length > 0) this.makeMove(moves!)
   }
 
@@ -144,7 +144,7 @@ export default class GamePage extends Vue {
 
   makeMove(moves: Move[]): void {
     this.solving = true
-    let move = moves.pop()!
+    const move = moves.pop()!
     this.board.clearHighlights()
     this.nextMove = move
     this.board.stacks[move.fromStack].highlightedFrom = true

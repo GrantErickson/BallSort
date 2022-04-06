@@ -16,7 +16,7 @@ export class Stack {
       throw new Error('Too many balls')
     }
     this.balls = []
-    for (let ball of balls.split('').reverse().join('')) {
+    for (const ball of balls.split('').reverse().join('')) {
       this.addBall(ball)
     }
   }
@@ -24,6 +24,7 @@ export class Stack {
   get ballCount(): number {
     return this.balls.length
   }
+
   get entropy(): number {
     // Calculate entropy of this stack
     // Full of the name type is 0
@@ -36,11 +37,9 @@ export class Stack {
     for (let i = this.balls.length - 1; i >= 0; i--) {
       if (lastBall == null) {
         lastBall = this.balls[i]
-      } else {
-        if (lastBall != this.balls[i]) {
-          result += 0.5
-          lastBall = this.balls[i]
-        }
+      } else if (lastBall !== this.balls[i]) {
+        result += 0.5
+        lastBall = this.balls[i]
       }
     }
     return result
@@ -65,7 +64,7 @@ export class Stack {
 
   toString(): string {
     let result: string = ''
-    for (let b of this.balls) {
+    for (const b of this.balls) {
       result = b + result
     }
     result = result.padStart(this.size, ' ')
@@ -79,9 +78,9 @@ export class Stack {
   get canGiveBallForReverse(): boolean {
     // Either there is only one ball or the top two balls are the same color.
     return (
-      this.balls.length == 1 ||
+      this.balls.length === 1 ||
       (this.balls.length > 0 &&
-        this.balls[this.balls.length - 1] == this.balls[this.balls.length - 2])
+        this.balls[this.balls.length - 1] === this.balls[this.balls.length - 2])
     )
   }
 
@@ -97,9 +96,9 @@ export class Stack {
   get topBallsOfSameColor(): number {
     if (this.balls.length === 0) return 0
     let result = 1
-    let originalBall = this.balls[this.balls.length - 1]
+    const originalBall = this.balls[this.balls.length - 1]
     for (let i = this.balls.length - 2; i >= 0; i--) {
-      if (this.balls[i] == originalBall) {
+      if (this.balls[i] === originalBall) {
         result++
       } else {
         break

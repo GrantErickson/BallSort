@@ -1,5 +1,5 @@
 <template>
-  <v-chip v-bind:class="color" class="my-0"> {{ ball }} </v-chip>
+  <v-chip :class="color" class="my-0"> {{ ball }} </v-chip>
 </template>
 
 <script lang="ts">

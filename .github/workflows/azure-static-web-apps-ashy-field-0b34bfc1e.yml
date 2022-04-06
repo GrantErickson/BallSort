@@ -23,6 +23,8 @@ jobs:
           node-version: '14'
       - name: Run NPM Install
         run: npm install
+      - name: Lint
+        run: npm run lint
       - name: Run Jest Tests
         run: npm run test
       - name: Build

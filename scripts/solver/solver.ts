@@ -59,4 +59,3 @@ export class Solver {
     return this.solve() != null
   }
 }
-

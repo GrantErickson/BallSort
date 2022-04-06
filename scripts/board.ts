@@ -156,7 +156,7 @@ export class Board {
   // Randomize Columns
   randomizeStacks(): void {
     for (let i = 0; i < this.stackCount; i++) {
-      const temp = this.stacks.splice(i,1)[0]
+      const temp = this.stacks.splice(i, 1)[0]
       const randomIndex = Math.floor(Math.random() * this.stacks.length)
       this.stacks.splice(randomIndex, 0, temp)
     }

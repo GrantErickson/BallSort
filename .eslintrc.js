@@ -12,6 +12,9 @@ module.exports = {
   plugins: [],
   // add your custom rules here
   rules: {
-    "no-use-before-define": ["warn", { "functions": true, "classes": true, "variables": true }],
+    'no-use-before-define': [
+      'warn',
+      { functions: true, classes: true, variables: true },
+    ],
   },
 }

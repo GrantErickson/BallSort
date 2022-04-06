@@ -7,17 +7,13 @@
         </v-card-title>
         <v-card-text>
           <v-row>
-            <v-col
-              v-for="(stack, index) in board.stacks"
-              :key="index"
-              class=""
-            >
+            <v-col v-for="(stack, index) in board.stacks" :key="index" class="">
               <CStack :stack="stack" @click="stackClick"></CStack>
             </v-col>
           </v-row>
         </v-card-text>
         <v-card-actions>
-          <v-btn color="primary" @click="undo" >Undo</v-btn>
+          <v-btn color="primary" @click="undo">Undo</v-btn>
           <v-chip class="mx-2">entropy: {{ board.entropy.toFixed(2) }}</v-chip>
           <v-chip class="mx-2">solvable: {{ isSolvable }}</v-chip>
           <v-chip v-if="nextMove != null" class="mx-2" @click="makeNextMove"
@@ -25,8 +21,8 @@
             {{ nextMove.toStack + 1 }}</v-chip
           >
           <v-spacer></v-spacer>
-          <v-btn v-if="!solving" class="primary" @click="solve()" >Solve</v-btn>
-          <v-btn v-if="solving" class="warning" @click="stopSolve()" 
+          <v-btn v-if="!solving" class="primary" @click="solve()">Solve</v-btn>
+          <v-btn v-if="solving" class="warning" @click="stopSolve()"
             >Stop</v-btn
           >
         </v-card-actions>
@@ -100,7 +96,7 @@ export default class GamePage extends Vue {
 
   get isSolvable(): boolean {
     if (this.solving) return true
-    if (this.board.entropy === 0){
+    if (this.board.entropy === 0) {
       this.nextMove = null
       this.board.clearHighlights()
       return true

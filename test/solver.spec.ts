@@ -32,17 +32,16 @@ describe('Solve Harder Board', () => {
     const solver = new Solver(board)
     const result = solver.solve()!
     expect(result.length).toBe(25)
-    // expect(solver.boardsAttempted.size).toBe(1723) 
+    // expect(solver.boardsAttempted.size).toBe(1723)
   })
 })
 
-
 describe('Solve Hardest Board', () => {
   test('11 Columns', () => {
-    const board = new Board(11, 4);
-    board.load("VTKBVCTPBCPSPLCSVBLSPGTGKSLBKTGVLGKC        ");
-    const solver = new Solver(board);
-    const result = solver.solve();
+    const board = new Board(11, 4)
+    board.load('VTKBVCTPBCPSPLCSVBLSPGTGKSLBKTGVLGKC        ')
+    const solver = new Solver(board)
+    const result = solver.solve()
     expect(result!.length).toBe(49)
   })
 })

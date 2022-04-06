@@ -2,7 +2,7 @@
 
 ## Description
 
-This is a little project where balls need to be sorted into stacks. 
+This is a little project where balls need to be sorted into stacks.
 
 [Play it here](https://ashy-field-0b34bfc1e.1.azurestaticapps.net/game)
 

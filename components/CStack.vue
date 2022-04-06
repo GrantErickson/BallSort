@@ -1,9 +1,9 @@
 <template>
   <v-card
     :class="{
-        selected: stack.selected,
-        highlightedFrom: stack.highlightedFrom,
-        highlightedTo: stack.highlightedTo,
+      selected: stack.selected,
+      highlightedFrom: stack.highlightedFrom,
+      highlightedTo: stack.highlightedTo,
     }"
     class="stack rounded-xl rounded-tr-0 rounded-tl-0"
     @click="click()"

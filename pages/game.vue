@@ -44,8 +44,7 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import Component from 'vue-class-component'
+import { Vue, Component } from 'vue-property-decorator'
 import { Board } from '@/scripts/board'
 import CStack from '@/components/CStack.vue'
 import { Solver } from '@/scripts/solver'
